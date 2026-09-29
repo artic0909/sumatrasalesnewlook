@@ -70,7 +70,25 @@ p{max-width:40rem;color:var(--mut);font-size:1.15rem}
 .stat span{color:var(--mut)}
 .split{display:grid;grid-template-columns:1fr 1.2fr;gap:5vw}
 .stick{position:sticky;top:18vh;align-self:start}
-.idx{font:800 clamp(5rem,15vw,11rem)/1 system-ui,sans-serif;color:transparent;-webkit-text-stroke:2px var(--b)}
+.idx{font:800 clamp(5rem,15vw,11rem)/1 system-ui,sans-serif;color:transparent;-webkit-text-stroke:2px var(--b);transition:all .45s cubic-bezier(.2,.8,.2,1)}
+.stick h2{transition:all .45s cubic-bezier(.2,.8,.2,1)}
+
+/* 01: Schoolwala - Yellow with sweet strokes (Left side only) */
+.stick[data-service="01"] .idx{color:rgba(245,158,11,.1);-webkit-text-stroke:2.5px #f59e0b;filter:drop-shadow(0 0 20px rgba(245,158,11,.35))}
+.stick[data-service="01"] #ttl{color:#f59e0b;-webkit-text-stroke:1px #b45309;text-shadow:0 4px 20px rgba(245,158,11,.35)}
+
+/* 02: Doctorwala - Blue matching 02 stroke (Left side only) */
+.stick[data-service="02"] .idx{color:transparent;-webkit-text-stroke:2.5px #0057db;filter:drop-shadow(0 0 20px rgba(0,87,219,.25))}
+.stick[data-service="02"] #ttl{color:#0057db;text-shadow:0 4px 20px rgba(0,87,219,.25)}
+
+/* 03: Rani Matrimonial - Deep bloody dark red (Left side only) */
+.stick[data-service="03"] .idx{color:rgba(128,0,16,.08);-webkit-text-stroke:2.5px #800010;filter:drop-shadow(0 0 20px rgba(128,0,16,.3))}
+.stick[data-service="03"] #ttl{color:#800010;text-shadow:0 4px 20px rgba(128,0,16,.3)}
+
+/* 04: Project Attendance - Dark green (Left side only) */
+.stick[data-service="04"] .idx{color:rgba(10,105,48,.08);-webkit-text-stroke:2.5px #0a6930;filter:drop-shadow(0 0 20px rgba(10,105,48,.3))}
+.stick[data-service="04"] #ttl{color:#0a6930;text-shadow:0 4px 20px rgba(10,105,48,.25)}
+
 .pn{min-height:62vh;display:flex;flex-direction:column;justify-content:center;opacity:.28;transform:translateX(34px);transition:opacity .6s,transform .7s cubic-bezier(.2,.8,.2,1);border-left:3px solid var(--line);padding-left:2.4rem}
 .pn.lit{opacity:1;transform:none;border-color:var(--b)}
 .pn h3{font-size:clamp(1.8rem,4vw,3rem);width:fit-content}
@@ -303,7 +321,7 @@ header a.c{padding:.42rem .72rem;font-size:.74rem}
 
 <section id="s2">
   <div class="split">
-    <div class="stick">
+    <div class="stick" data-service="01">
       <div class="tag">Chapter 02 / Services</div>
       <div class="idx" id="idx">01</div>
       <h2 id="ttl">Schoolwala</h2>
@@ -380,7 +398,7 @@ header a.c{padding:.42rem .72rem;font-size:.74rem}
 <script>
 (function(){
 var $=function(s,c){return [].slice.call((c||document).querySelectorAll(s))};
-var bar=$('#bar')[0],ar=$('#ar')[0],hs=$('#hs')[0],trk=$('#trk')[0],pb=$('#pb div')[0],tl=$('.tl')[0],tf=$('#tf')[0],sts=$('.st'),hb=$('#hb')[0],idx=$('#idx')[0],ttl=$('#ttl')[0];
+var bar=$('#bar')[0],ar=$('#ar')[0],hs=$('#hs')[0],trk=$('#trk')[0],pb=$('#pb div')[0],tl=$('.tl')[0],tf=$('#tf')[0],sts=$('.st'),hb=$('#hb')[0],idx=$('#idx')[0],ttl=$('#ttl')[0],stk=$('.stick')[0];
 var T=$('[data-pt]'),cur=null,par=null,dirty=true;
 function cl(v){return Math.min(1,Math.max(0,v))}
 function sz(){hs.style.height=Math.max(trk.scrollWidth-innerWidth,0)+innerHeight+'px'}
@@ -393,7 +411,7 @@ function pick(){
     if(cur)cur.classList.remove('lit');if(par)par.classList.remove('lit');
     cur=best;par=null;
     if(cur){cur.classList.add('lit','seen');par=cur.closest('.pn,.pc,.st');
-      if(par){par.classList.add('lit');if(par.dataset.i){idx.textContent=par.dataset.i;ttl.textContent=par.dataset.t}}}
+      if(par){par.classList.add('lit');if(par.dataset.i){idx.textContent=par.dataset.i;ttl.textContent=par.dataset.t;if(stk)stk.dataset.service=par.dataset.i}}}
   }
   if(cur){var r=cur.getClientRects()[0];ar.style.opacity=1;ar.style.transform='translate('+Math.max(r.left-46,6)+'px,'+(r.top+r.height/2-17)+'px)'}else ar.style.opacity=0;
 }
